@@ -3,10 +3,14 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.translation import gettext
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .forms import LoginForm
 
 # Create your views here.
+
+decorators = [login_required]
 
 class LoginView(views.View):
     def get(self, request, *args, **kwargs):
@@ -45,3 +49,8 @@ class LoginView(views.View):
 
         except:
             return render(request, 'registration/login.html', {'form': form})
+
+# @method_decorator(decorators, name='get')
+class DashboardTemplateView(views.View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'dashboard/dashboard.html', {})
