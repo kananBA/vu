@@ -12,6 +12,10 @@ from .forms import LoginForm
 
 decorators = [login_required]
 
+class IndexView(views.View):
+    def get(self, request, *args, **kwargs):
+        return redirect('users:login')
+
 class LoginView(views.View):
     def get(self, request, *args, **kwargs):
         form = LoginForm()
@@ -35,9 +39,13 @@ class LoginView(views.View):
                 password=form.cleaned_data['password'],
             )
 
-            if user is not None:
+            if user is not None and user.role == 1:
                 login(request, user)
-                return redirect('users:index')
+                return redirect('teacher:index')
+
+            elif user is not None and user.role == 2:
+                login(request, user)
+                return redirect('student:index')
 
             else:
                 messages.warning(
@@ -49,8 +57,3 @@ class LoginView(views.View):
 
         except:
             return render(request, 'registration/login.html', {'form': form})
-
-# @method_decorator(decorators, name='get')
-class DashboardTemplateView(views.View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'dashboard/dashboard.html', {})
