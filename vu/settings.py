@@ -40,8 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'course.apps.CourseConfig',
     'dashboard.apps.DashboardConfig',
+    'student.apps.StudentConfig',
+    'teacher.apps.TeacherConfig',
     'users.apps.UsersConfig',
 ]
+
+# Custom Authentication User Model
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
