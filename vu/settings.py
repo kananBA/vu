@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'course.apps.CourseConfig',
     'dashboard.apps.DashboardConfig',
     'student.apps.StudentConfig',
+    'task.apps.TaskConfig',
     'teacher.apps.TeacherConfig',
     'users.apps.UsersConfig',
 ]
@@ -118,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
 
 TIME_ZONE = 'Asia/Tehran'
 
