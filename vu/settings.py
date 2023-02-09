@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'course.apps.CourseConfig',
     'dashboard.apps.DashboardConfig',
+    'quiz.apps.QuizConfig',
     'student.apps.StudentConfig',
     'task.apps.TaskConfig',
     'teacher.apps.TeacherConfig',
