@@ -253,7 +253,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ course.english_title }}</h5>
                                     <p class="card-text">{{ course.persian_title }}</p>
-                                    <a href="#" class="stretched-link"></a>
+                                    <a href="{% url 'teacher:course' course.id %}" class="stretched-link"></a>
                                 </div>
                             </div>
                         </div>

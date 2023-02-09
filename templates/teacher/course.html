@@ -37,17 +37,21 @@
                         <div>
                             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#studentModal">
                                 <i class="fas fa-plus fa-sm text-white-50"></i>
+                                جزئیات تکالیف
+                            </a>
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#studentModal">
+                                <i class="fas fa-plus fa-sm text-white-50"></i>
                                 اضافه کردن دانشجو
                             </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#noticeModal">
+                            <a href="{% url 'teacher:notice' 1 %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-plus fa-sm text-white-50"></i>
                                 تالار اعلانات
                             </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#noticeModal">
+                            <a href="{% url 'teacher:task-create' 1 %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-plus fa-sm text-white-50"></i>
                                 افزودن تکالیف
                             </a>
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#noticeModal">
+                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                 <i class="fas fa-plus fa-sm text-white-50"></i>
                                 افزودن امتحان
                             </a>
@@ -184,30 +188,6 @@
                         <div class="form-group">
                           <label for="exampleInputEmail1">شماره دانشجویی</label>
                           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer" style="justify-content: start">
-                    <button class="btn btn-success" type="button" data-dismiss="modal">اضافه کردن</button>
-                    <a class="btn btn-danger" href="login.html">لغو</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true" style="direction: rtl">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">تالار اعلانات</h5>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                          <label for="exampleInputEmail1">توضیحات</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
                     </form>
                 </div>

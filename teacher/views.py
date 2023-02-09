@@ -32,6 +32,15 @@ class CourseNoticeTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
         return render(request, 'teacher/notice.html', {})
 
-class TaskTemplateView(views.View):
+class TaskDetailTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
-        return render(request, 'teacher/task.html', {})
+        return render(request, 'teacher/task-detail.html', {})
+
+
+class TaskCreateTemplateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        return render(request, 'teacher/task-create.html', {})
+
+class TaskListTemplateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        return render(request, 'teacher/task-list.html', {})
