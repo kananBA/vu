@@ -72,77 +72,42 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% for student in course.student.all %}
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
+                                    <th scope="row">{{ student.username }}</th>
+                                    <td>{{ student.first_name }}</td>
+                                    <td>{{ student.last_name }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
+                                        <a href="{% url 'teacher:course-student-delete' pk=course.id username=student.username %}" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="col-md-8">
-                            <table class="table table-bordered text-center">
-                                <thead>
-                                <tr>
-                                    <th scope="col">شناسه</th>
-                                    <th scope="col">توضیحات</th>
-                                    <th scope="col">حذف</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <form class="p-3 mb-3" style="background: #4e73df; color: #fff;">
+                    <form method="post" action="{% url 'teacher:course' course.id %}" class="p-3 mb-3" style="background: #4e73df; color: #fff;">
+                        {% csrf_token %}
                         <div class="form-row">
                             <div class="form-group col-md-3">
                               <label for="inputCity">عنوان انگلیسی</label>
-                              <input type="text" class="form-control" id="inputCity">
+                              {{ form.english_title }}
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputCity">عنوان فارسی</label>
-                                <input type="text" class="form-control" id="inputCity">
+                                {{ form.persian_title }}
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="inputCity">تصویر</label>
-                                <input type="file" class="form-control-file" id="inputCity">
+                                {{ form.image }}
                             </div>
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-8">
                               <label for="inputCity">توضیحات</label>
-                              <textarea class="form-control" id="inputCity" rows="3"></textarea>
+                              {{ form.description }}
                             </div>
                         </div>
 

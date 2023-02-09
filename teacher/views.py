@@ -1,7 +1,10 @@
 from django import views
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from course.forms import CourseUpdateForm
 from course.models import Course
+
+from users.models import User
 
 # Create your views here.
 
@@ -21,12 +24,32 @@ class DashboardTemplateView(views.View):
 class CourseTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
         course = Course.objects.get(id=pk)
+        form = CourseUpdateForm(instance=course)
 
         data = {
             'course': course,
+            'form': form,
         }
 
         return render(request, 'teacher/course.html', data)
+
+    def post(self, request, pk=None, format=None):
+        course = Course.objects.get(id=pk)
+        form = CourseUpdateForm(self.request.POST, instance=course)
+
+        if form.is_valid():
+            form.save()
+            return redirect('teacher:course', pk=course.id)
+
+
+class CourseStudentDeleteView(views.View):
+    def get(self, request, pk=None, username=None, *args, **kwargs):
+        course = Course.objects.get(id=pk)
+        student = User.objects.get(username=username)
+
+        course.student.remove(student)
+
+        return redirect('teacher:course', pk=course.id)
 
 class CourseNoticeTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
