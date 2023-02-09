@@ -151,13 +151,13 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                          <label for="exampleInputEmail1">شماره دانشجویی</label>
-                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                          <label for="studentUsername">شماره دانشجویی</label>
+                          <input type="username" class="form-control" id="studentUsername">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer" style="justify-content: start">
-                    <button class="btn btn-success" type="button" data-dismiss="modal">اضافه کردن</button>
+                    <button class="btn btn-success" type="button" id="addStudent">اضافه کردن</button>
                     <a class="btn btn-danger" href="login.html">لغو</a>
                 </div>
             </div>
@@ -180,5 +180,18 @@
     <!-- Page level custom scripts -->
     <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#addStudent").click(function(){
+                var value = $("#studentUsername").val();
+                var origin = window.location.origin;
+                var url = origin + '/teacher/course/' + {{ course.id }} + '/student/add/' + value + '/'
+
+                $.get(url);
+                location.reload();
+            });
+        });
+    </script>
 
 {% endblock %}

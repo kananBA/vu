@@ -51,6 +51,17 @@ class CourseStudentDeleteView(views.View):
 
         return redirect('teacher:course', pk=course.id)
 
+
+class CourseStudentAddView(views.View):
+    def get(self, request, pk=None, username=None, *args, **kwargs):
+        course = Course.objects.get(id=pk)
+        student = User.objects.get(username=username)
+
+        course.student.add(student)
+
+        return redirect('teacher:course', pk=course.id)
+
+
 class CourseNoticeTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
         return render(request, 'teacher/notice.html', {})
