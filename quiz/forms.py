@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.models import inlineformset_factory
 
-from .models import Quiz, QuizMultipleChoiceQuestion, QuizDescriptiveQuestion
+from .models import Quiz, QuizMultipleChoiceQuestion, QuizDescriptiveQuestion, QuizFileQuestion
 
 
 class QuizCreateForm(forms.ModelForm):
@@ -63,5 +63,18 @@ class QuizDescriptiveQuestionCreateForm(forms.ModelForm):
             'question': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 2,
+            }),
+        }
+
+class QuizFileQuestionCreateForm(forms.ModelForm):
+    class Meta:
+        model = QuizFileQuestion
+        fields = (
+            'file',
+        )
+
+        widgets = {
+            'file': forms.FileInput(attrs={
+                'class': 'form-control',
             }),
         }

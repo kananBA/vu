@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django import views
 
-from .models import Quiz, QuizMultipleChoiceQuestion, QuizDescriptiveQuestion
-from .forms import QuizCreateForm, QuizMultipleChoiceCreateForm, QuizDescriptiveQuestionCreateForm
+from .models import Quiz, QuizMultipleChoiceQuestion, QuizDescriptiveQuestion, QuizFileQuestion
+from .forms import QuizCreateForm, QuizMultipleChoiceCreateForm, QuizDescriptiveQuestionCreateForm, QuizFileQuestionCreateForm
 
 # Create your views here.
 
@@ -80,3 +80,27 @@ class DescriptiveCreateView(views.View):
             form.save()
 
             return redirect("quiz:descriptive-create", pk=quiz.id)
+
+class FileCreateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        quiz = Quiz.objects.get(id=pk)
+        form = QuizFileQuestionCreateForm()
+        file_question_list = QuizFileQuestion.objects.filter(quiz=quiz)
+
+        data = {
+            'quiz': quiz,
+            'form': form,
+            'file_question_list': file_question_list,
+        }
+
+        return render(request, 'teacher/file-create.html', data)
+
+    def post(self, request, pk=None, format=None):
+        quiz = Quiz.objects.get(id=pk)
+        form = QuizFileQuestionCreateForm(self.request.POST, self.request.FILES)
+
+        if form.is_valid():
+            form.instance.quiz = quiz
+            form.save()
+
+            return redirect("quiz:file-create", pk=quiz.id)
