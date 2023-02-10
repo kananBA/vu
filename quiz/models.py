@@ -14,9 +14,6 @@ class Quiz(models.Model):
     duration = models.PositiveIntegerField(
         verbose_name=_('Duration'),
     )
-    start_at = models.DateTimeField(
-        verbose_name=_('Start at'),
-    )
     created_at = models.DateTimeField(
         auto_now_add=True,
     )
@@ -67,6 +64,10 @@ class QuizMultipleChoiceQuestion(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_('Quiz'),
     )
+    question = models.TextField(
+        max_length=1000,
+        verbose_name=_('Question'),
+    )
     first_choice = models.CharField(
         max_length=30,
         verbose_name=_('First choice'),
@@ -100,7 +101,7 @@ class QuizDescriptiveQuestion(models.Model):
     )
     question = models.TextField(
         max_length=1000,
-        verbose_name=_('Answer'),
+        verbose_name=_('Question'),
     )
 
     class Meta:
