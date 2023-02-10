@@ -1,9 +1,10 @@
 from django import views
 from django.shortcuts import render, redirect
 
-from quiz.models import Quiz
+from quiz.models import Quiz, QuizStudent
 from .models import MultipleChoiceQuestion, DescriptiveQuestion, FileQuestion
 from .forms import MultipleChoiceQuestionCreateForm, DescriptiveQuestionCreateForm, FileQuestionCreateForm
+from answer.models import MultipleChoiceAnswer, DescriptiveAnswer, FileAnswer
 
 # Create your views here.
 
@@ -24,11 +25,19 @@ class MultipleChoiceCreateView(views.View):
 
     def post(self, request, pk=None, format=None):
         quiz = Quiz.objects.get(id=pk)
+        student_list = quiz.course.student.all()
         form = MultipleChoiceQuestionCreateForm(data=self.request.POST)
 
         if form.is_valid():
             form.instance.quiz = quiz
-            form.save()
+            multiple_choice_question = form.save()
+
+            for student in student_list:
+                quiz_student = QuizStudent.objects.get(quiz=quiz, student=student)
+                MultipleChoiceAnswer.objects.create(
+                    quiz_student=quiz_student,
+                    question=multiple_choice_question,
+                )
 
             return redirect("question:multiple-create", pk=quiz.id)
 
@@ -49,11 +58,19 @@ class DescriptiveCreateView(views.View):
 
     def post(self, request, pk=None, format=None):
         quiz = Quiz.objects.get(id=pk)
+        student_list = quiz.course.student.all()
         form = DescriptiveQuestionCreateForm(data=self.request.POST)
 
         if form.is_valid():
             form.instance.quiz = quiz
-            form.save()
+            descriptive_question = form.save()
+
+            for student in student_list:
+                quiz_student = QuizStudent.objects.get(quiz=quiz, student=student)
+                DescriptiveAnswer.objects.create(
+                    quiz_student=quiz_student,
+                    question=descriptive_question,
+                )
 
             return redirect("question:descriptive-create", pk=quiz.id)
 
@@ -74,10 +91,18 @@ class FileCreateView(views.View):
 
     def post(self, request, pk=None, format=None):
         quiz = Quiz.objects.get(id=pk)
+        student_list = quiz.course.student.all()
         form = FileQuestionCreateForm(self.request.POST, self.request.FILES)
 
         if form.is_valid():
             form.instance.quiz = quiz
-            form.save()
+            file_question=form.save()
+
+            for student in student_list:
+                quiz_student = QuizStudent.objects.get(quiz=quiz, student=student)
+                FileAnswer.objects.create(
+                    quiz_student=quiz_student,
+                    question=file_question,
+                )
 
             return redirect("question:file-create", pk=quiz.id)

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django import views
 
-from .models import Quiz
+from .models import QuizStudent
 from .forms import QuizCreateForm
 from course.models import Course
 
@@ -26,9 +26,17 @@ class QuizCreateView(views.View):
 
         if form.is_valid():
             form.instance.course = course
-            form.save()
+            quiz = form.save()
 
-            return redirect('quiz:create')
+            student_list = course.student.all()
+
+            for student in student_list:
+                QuizStudent.objects.create(
+                    quiz=quiz,
+                    student=student,
+                )
+
+            return redirect('quiz:create', pk=course.id)
 
         data = {
             'form': form,

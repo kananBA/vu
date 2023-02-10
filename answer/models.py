@@ -20,10 +20,17 @@ class MultipleChoiceAnswer(models.Model):
     )
     answer = models.CharField(
         max_length=30,
+        blank=True,
+        null=True,
         verbose_name=_('Answer'),
     )
     grade = models.FloatField(
+        default=0,
         verbose_name=_('Grade'),
+    )
+    is_show = models.BooleanField(
+        default=False,
+        verbose_name=_('Is show'),
     )
 
     class Meta:
@@ -47,10 +54,17 @@ class DescriptiveAnswer(models.Model):
     )
     answer = models.TextField(
         max_length=1000,
+        blank=True,
+        null=True,
         verbose_name=_('Answer'),
     )
     grade = models.FloatField(
+        default=0,
         verbose_name=_('Grade'),
+    )
+    is_show = models.BooleanField(
+        default=False,
+        verbose_name=_('Is show'),
     )
 
     class Meta:
@@ -74,10 +88,17 @@ class FileAnswer(models.Model):
     )
     file = models.FileField(
         upload_to='quiz/file/',
+        blank=True,
+        null=True,
         verbose_name=_('File'),
     )
     grade = models.FloatField(
+        default=0,
         verbose_name=_('Grade'),
+    )
+    is_show = models.BooleanField(
+        default=False,
+        verbose_name=_('Is show'),
     )
 
     class Meta:

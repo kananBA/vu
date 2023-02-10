@@ -61,4 +61,4 @@ class QuizStudent(models.Model):
         verbose_name_plural = _('Quiz students')
 
     def __str__(self):
-        return self.english_title
+        return str(self.student)
