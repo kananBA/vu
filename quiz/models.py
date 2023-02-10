@@ -5,12 +5,24 @@ from users.models import User
 
 # Create your models here.
 
+
 class Quiz(models.Model):
-    title = models.CharField(max_length=50, verbose_name=_('Title'))
-    duration = models.PositiveIntegerField(verbose_name=_('Duration'))
-    start_at = models.DateTimeField(verbose_name=_('Start at'))
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    title = models.CharField(
+        max_length=50,
+        verbose_name=_('Title'),
+    )
+    duration = models.PositiveIntegerField(
+        verbose_name=_('Duration'),
+    )
+    start_at = models.DateTimeField(
+        verbose_name=_('Start at'),
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = _('Quiz')
@@ -21,10 +33,25 @@ class Quiz(models.Model):
 
 
 class QuizStudent(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, verbose_name=_('Quiz'))
-    student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Student'))
-    grade = models.FloatField(blank=True, null=True, verbose_name=_('Grade'))
-    is_present = models.BooleanField(default=False, verbose_name=_('Is present'))
+    quiz = models.ForeignKey(
+        Quiz,
+        on_delete=models.CASCADE,
+        verbose_name=_('Quiz'),
+    )
+    student = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name=_('Student'),
+    )
+    grade = models.FloatField(
+        blank=True,
+        null=True,
+        verbose_name=_('Grade'),
+    )
+    is_present = models.BooleanField(
+        default=False,
+        verbose_name=_('Is present'),
+    )
 
     class Meta:
         verbose_name = _('Quiz student')
@@ -35,11 +62,27 @@ class QuizStudent(models.Model):
 
 
 class QuizMultipleChoiceQuestion(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, verbose_name=_('Quiz'))
-    first_choice = models.CharField(max_length=30, verbose_name=_('First choice'))
-    second_choice = models.CharField(max_length=30, verbose_name=_('Second choice'))
-    third_choice = models.CharField(max_length=30, verbose_name=_('Third choice'))
-    forth_choice = models.CharField(max_length=30, verbose_name=_('Forth choice'))
+    quiz = models.ForeignKey(
+        Quiz,
+        on_delete=models.CASCADE,
+        verbose_name=_('Quiz'),
+    )
+    first_choice = models.CharField(
+        max_length=30,
+        verbose_name=_('First choice'),
+    )
+    second_choice = models.CharField(
+        max_length=30,
+        verbose_name=_('Second choice'),
+    )
+    third_choice = models.CharField(
+        max_length=30,
+        verbose_name=_('Third choice'),
+    )
+    forth_choice = models.CharField(
+        max_length=30,
+        verbose_name=_('Forth choice'),
+    )
 
     class Meta:
         verbose_name = _('Quiz multiple choice question')
@@ -50,8 +93,15 @@ class QuizMultipleChoiceQuestion(models.Model):
 
 
 class QuizDescriptiveQuestion(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, verbose_name=_('Quiz'))
-    question = models.TextField(max_length=1000, verbose_name=_('Answer'))
+    quiz = models.ForeignKey(
+        Quiz,
+        on_delete=models.CASCADE,
+        verbose_name=_('Quiz'),
+    )
+    question = models.TextField(
+        max_length=1000,
+        verbose_name=_('Answer'),
+    )
 
     class Meta:
         verbose_name = _('Quiz descriptive question')
@@ -62,8 +112,15 @@ class QuizDescriptiveQuestion(models.Model):
 
 
 class QuizFileQuestion(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, verbose_name=_('Quiz'))
-    file = models.FileField(upload_to='quiz/file/', verbose_name=_('File'))
+    quiz = models.ForeignKey(
+        Quiz,
+        on_delete=models.CASCADE,
+        verbose_name=_('Quiz'),
+    )
+    file = models.FileField(
+        upload_to='quiz/file/',
+        verbose_name=_('File'),
+    )
 
     class Meta:
         verbose_name = _('Quiz file question')
@@ -74,10 +131,23 @@ class QuizFileQuestion(models.Model):
 
 
 class QuizMultipleChoiceAnswer(models.Model):
-    quiz_student = models.ForeignKey(QuizStudent, on_delete=models.CASCADE, verbose_name=_('Quiz student'))
-    question = models.ForeignKey(QuizMultipleChoiceQuestion, on_delete=models.CASCADE, verbose_name=_('Question'))
-    answer = models.CharField(max_length=30, verbose_name=_('Answer'))
-    grade = models.FloatField(verbose_name=_('Grade'))
+    quiz_student = models.ForeignKey(
+        QuizStudent,
+        on_delete=models.CASCADE,
+        verbose_name=_('Quiz student'),
+    )
+    question = models.ForeignKey(
+        QuizMultipleChoiceQuestion,
+        on_delete=models.CASCADE,
+        verbose_name=_('Question'),
+    )
+    answer = models.CharField(
+        max_length=30,
+        verbose_name=_('Answer'),
+    )
+    grade = models.FloatField(
+        verbose_name=_('Grade'),
+    )
 
     class Meta:
         verbose_name = _('Quiz multiple choice student')
@@ -88,10 +158,23 @@ class QuizMultipleChoiceAnswer(models.Model):
 
 
 class QuizDescriptiveAnswer(models.Model):
-    quiz_student = models.ForeignKey(QuizStudent, on_delete=models.CASCADE, verbose_name=_('Quiz student'))
-    question = models.ForeignKey(QuizDescriptiveQuestion, on_delete=models.CASCADE, verbose_name=_('Question'))
-    answer = models.TextField(max_length=1000, verbose_name=_('Answer'))
-    grade = models.FloatField(verbose_name=_('Grade'))
+    quiz_student = models.ForeignKey(
+        QuizStudent,
+        on_delete=models.CASCADE,
+        verbose_name=_('Quiz student'),
+    )
+    question = models.ForeignKey(
+        QuizDescriptiveQuestion,
+        on_delete=models.CASCADE,
+        verbose_name=_('Question'),
+    )
+    answer = models.TextField(
+        max_length=1000,
+        verbose_name=_('Answer'),
+    )
+    grade = models.FloatField(
+        verbose_name=_('Grade'),
+    )
 
     class Meta:
         verbose_name = _('Quiz descriptive answer')
@@ -102,10 +185,23 @@ class QuizDescriptiveAnswer(models.Model):
 
 
 class QuizFileAnswer(models.Model):
-    quiz_student = models.ForeignKey(QuizStudent, on_delete=models.CASCADE, verbose_name=_('Quiz student'))
-    question = models.ForeignKey(QuizFileQuestion, on_delete=models.CASCADE, verbose_name=_('Question'))
-    file = models.FileField(upload_to='quiz/file/', verbose_name=_('File'))
-    grade = models.FloatField(verbose_name=_('Grade'))
+    quiz_student = models.ForeignKey(
+        QuizStudent,
+        on_delete=models.CASCADE,
+        verbose_name=_('Quiz student'),
+    )
+    question = models.ForeignKey(
+        QuizFileQuestion,
+        on_delete=models.CASCADE,
+        verbose_name=_('Question'),
+    )
+    file = models.FileField(
+        upload_to='quiz/file/',
+        verbose_name=_('File'),
+    )
+    grade = models.FloatField(
+        verbose_name=_('Grade'),
+    )
 
     class Meta:
         verbose_name = _('Quiz file answer')

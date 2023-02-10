@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
+
 class User(AbstractUser):
     TEACHER = 1
     STUDENT = 2
@@ -12,11 +13,23 @@ class User(AbstractUser):
         (STUDENT, _("Student")),
     )
 
-    role = models.PositiveSmallIntegerField(default=2, choices=ROLE_CHOICES, verbose_name=_('Role'))
-    photo = models.ImageField(upload_to='photo/', blank=True, null=True, verbose_name=_('Photo'))
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
+    role = models.PositiveSmallIntegerField(
+        default=2,
+        choices=ROLE_CHOICES,
+        verbose_name=_('Role'),
+    )
+    photo = models.ImageField(
+        upload_to='photo/',
+        blank=True,
+        null=True,
+        verbose_name=_('Photo'),
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = _('User')

@@ -6,14 +6,34 @@ from users.models import User
 
 # Create your models here.
 
-class CourseTask(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=_('Course'))
-    title = models.CharField(max_length=100, verbose_name=_('Title'))
-    file = models.FileField(upload_to='course/file/', verbose_name=_('File'))
-    description = models.TextField(max_length=1000, blank=True, null=True, verbose_name=_('Description'))
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class CourseTask(models.Model):
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name=_('Course'),
+    )
+    title = models.CharField(
+        max_length=100,
+        verbose_name=_('Title'),
+    )
+    file = models.FileField(
+        upload_to='course/file/',
+        verbose_name=_('File'),
+    )
+    description = models.TextField(
+        max_length=1000,
+        blank=True,
+        null=True,
+        verbose_name=_('Description'),
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = _('Course task')
@@ -24,12 +44,33 @@ class CourseTask(models.Model):
 
 
 class CourseTaskStudent(models.Model):
-    course_task = models.ForeignKey(CourseTask, on_delete=models.CASCADE, verbose_name=_('Course task'))
-    student = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Student'))
-    file = models.FileField(upload_to='course/file/', blank=True, null=True, verbose_name=_('File'))
-    grade = models.FloatField(blank=True, null=True, verbose_name=_('Grade'))
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    course_task = models.ForeignKey(
+        CourseTask,
+        on_delete=models.CASCADE,
+        verbose_name=_('Course task'),
+    )
+    student = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name=_('Student'),
+    )
+    file = models.FileField(
+        upload_to='course/file/',
+        blank=True,
+        null=True,
+        verbose_name=_('File'),
+    )
+    grade = models.FloatField(
+        blank=True,
+        null=True,
+        verbose_name=_('Grade'),
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
 
     class Meta:
         verbose_name = _('Course task student')
