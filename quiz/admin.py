@@ -1,36 +1,38 @@
 from django.contrib import admin
 
-from .models import Quiz, QuizMultipleChoiceQuestion, QuizDescriptiveQuestion, QuizFileQuestion, QuizStudent, QuizMultipleChoiceAnswer, QuizDescriptiveAnswer, QuizFileAnswer
+from .models import Quiz, QuizStudent
+from question.models import MultipleChoiceQuestion, DescriptiveQuestion, FileQuestion
+from answer.models import MultipleChoiceAnswer, DescriptiveAnswer, FileAnswer
 
 # Register your models here.
 
-class QuizMultipleChoiceQuestionTabularInline(admin.TabularInline):
-    model = QuizMultipleChoiceQuestion
+class MultipleChoiceQuestionTabularInline(admin.TabularInline):
+    model = MultipleChoiceQuestion
     extra = 0
 
 
-class QuizDescriptiveQuestionTabularInline(admin.TabularInline):
-    model = QuizDescriptiveQuestion
+class DescriptiveQuestionTabularInline(admin.TabularInline):
+    model = DescriptiveQuestion
     extra = 0
 
 
-class QuizFileQuestionTabularInline(admin.TabularInline):
-    model = QuizFileQuestion
+class FileQuestionTabularInline(admin.TabularInline):
+    model = FileQuestion
     extra = 0
 
 
 class QuizAdmin(admin.ModelAdmin):
     inlines = [
-        QuizMultipleChoiceQuestionTabularInline,
-        QuizDescriptiveQuestionTabularInline,
-        QuizFileQuestionTabularInline,
+        MultipleChoiceQuestionTabularInline,
+        DescriptiveQuestionTabularInline,
+        FileQuestionTabularInline,
     ]
 
 admin.site.register(Quiz, QuizAdmin)
 
 
-class QuizMultipleChoiceAnswerTabularInline(admin.TabularInline):
-    model = QuizMultipleChoiceAnswer
+class MultipleChoiceAnswerTabularInline(admin.TabularInline):
+    model = MultipleChoiceAnswer
     extra = 0
     readonly_fields = (
         'answer',
@@ -38,8 +40,8 @@ class QuizMultipleChoiceAnswerTabularInline(admin.TabularInline):
     )
 
 
-class QuizDescriptiveAnswerTabularInline(admin.TabularInline):
-    model = QuizDescriptiveAnswer
+class DescriptiveAnswerTabularInline(admin.TabularInline):
+    model = DescriptiveAnswer
     extra = 0
     readonly_fields = (
         'answer',
@@ -47,8 +49,8 @@ class QuizDescriptiveAnswerTabularInline(admin.TabularInline):
     )
 
 
-class QuizFileAnswerTabularInline(admin.TabularInline):
-    model = QuizFileAnswer
+class FileAnswerTabularInline(admin.TabularInline):
+    model = FileAnswer
     extra = 0
     readonly_fields = (
         'file',
@@ -58,9 +60,9 @@ class QuizFileAnswerTabularInline(admin.TabularInline):
 
 class QuizStudentAdmin(admin.ModelAdmin):
     inlines = [
-        QuizMultipleChoiceAnswerTabularInline,
-        QuizDescriptiveAnswerTabularInline,
-        QuizFileAnswerTabularInline,
+        MultipleChoiceAnswerTabularInline,
+        DescriptiveAnswerTabularInline,
+        FileAnswerTabularInline,
     ]
 
 admin.site.register(QuizStudent, QuizStudentAdmin)
