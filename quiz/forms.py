@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.models import inlineformset_factory
 
-from .models import Quiz, QuizMultipleChoiceQuestion
+from .models import Quiz, QuizMultipleChoiceQuestion, QuizDescriptiveQuestion
 
 
 class QuizCreateForm(forms.ModelForm):
@@ -49,5 +49,19 @@ class QuizMultipleChoiceCreateForm(forms.ModelForm):
             }),
             'forth_choice': forms.TextInput(attrs={
                 'class': 'form-control',
+            }),
+        }
+
+class QuizDescriptiveQuestionCreateForm(forms.ModelForm):
+    class Meta:
+        model = QuizDescriptiveQuestion
+        fields = (
+            'question',
+        )
+
+        widgets = {
+            'question': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 2,
             }),
         }

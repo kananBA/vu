@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django import views
 
-from .models import Quiz, QuizMultipleChoiceQuestion
-from .forms import QuizCreateForm, QuizMultipleChoiceCreateForm
+from .models import Quiz, QuizMultipleChoiceQuestion, QuizDescriptiveQuestion
+from .forms import QuizCreateForm, QuizMultipleChoiceCreateForm, QuizDescriptiveQuestionCreateForm
 
 # Create your views here.
+
 
 class QuizCreateView(views.View):
     def get(self, request, *args, **kwargs):
@@ -30,6 +31,7 @@ class QuizCreateView(views.View):
 
         return render(request, "teacher/quiz-create.html", data)
 
+
 class MultipleChoiceCreateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
         quiz = Quiz.objects.get(id=pk)
@@ -53,3 +55,28 @@ class MultipleChoiceCreateView(views.View):
             form.save()
 
             return redirect("quiz:multiple-choice-create", pk=quiz.id)
+
+
+class DescriptiveCreateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        quiz = Quiz.objects.get(id=pk)
+        form = QuizDescriptiveQuestionCreateForm()
+        descriptive_question_list = QuizDescriptiveQuestion.objects.filter(quiz=quiz)
+
+        data = {
+            'quiz': quiz,
+            'form': form,
+            'descriptive_question_list': descriptive_question_list,
+        }
+
+        return render(request, 'teacher/descriptive-create.html', data)
+
+    def post(self, request, pk=None, format=None):
+        quiz = Quiz.objects.get(id=pk)
+        form = QuizDescriptiveQuestionCreateForm(data=self.request.POST)
+
+        if form.is_valid():
+            form.instance.quiz = quiz
+            form.save()
+
+            return redirect("quiz:descriptive-create", pk=quiz.id)
