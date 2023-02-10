@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Course
+from .models import Course, CourseNotice
 
 class CourseUpdateForm(forms.ModelForm):
     class Meta:
@@ -27,4 +27,18 @@ class CourseUpdateForm(forms.ModelForm):
             'image': forms.FileInput(attrs={
                 'class': 'form-control-file',
             })
+        }
+
+class CourseNoticeCreateForm(forms.ModelForm):
+    class Meta:
+        model = CourseNotice
+        fields = (
+            'description',
+        )
+
+        widgets = {
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+            }),
         }

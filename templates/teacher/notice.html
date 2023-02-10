@@ -47,31 +47,27 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                {% for course_notice in course_notice_list %}
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
+                                    <th scope="row">{{ course_notice.id }}</th>
+                                    <td>{{ course_notice.description }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
+                                        <a href="{% url 'teacher:notice-delete' pk=course.id notice=course_notice.id %}" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger" role="button" aria-pressed="true">DELETE</a>
-                                    </td>
-                                </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
-                    <form class="p-3 mb-3" style="background: #4e73df; color: #fff;">
+                    <form method="post" action="{% url 'teacher:notice' course.id %}" class="p-3 mb-3" style="background: #4e73df; color: #fff;">
+                    {% csrf_token %}
 
                         <div class="form-row">
                             <div class="form-group col-md-6">
                               <label for="inputCity">توضیحات</label>
-                              <textarea class="form-control" id="inputCity" rows="3"></textarea>
+                              {{ form.description }}
                             </div>
                         </div>
 

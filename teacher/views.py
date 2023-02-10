@@ -1,8 +1,8 @@
 from django import views
 from django.shortcuts import render, redirect
 
-from course.forms import CourseUpdateForm
-from course.models import Course
+from course.forms import CourseUpdateForm, CourseNoticeCreateForm
+from course.models import Course, CourseNotice
 
 from users.models import User
 
@@ -64,7 +64,42 @@ class CourseStudentAddView(views.View):
 
 class CourseNoticeTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
-        return render(request, 'teacher/notice.html', {})
+        form = CourseNoticeCreateForm()
+
+        course = Course.objects.get(id=pk)
+        course_notice_list = CourseNotice.objects.filter(course=course)
+
+        data = {
+            'course': course,
+            'form': form,
+            'course_notice_list': course_notice_list,
+        }
+
+        return render(request, 'teacher/notice.html', data)
+
+    def post(self, request, pk=None, *args, **kwargs):
+        form = CourseNoticeCreateForm(request.POST)
+
+        course = Course.objects.get(id=pk)
+        creator = self.request.user
+
+        if form.is_valid():
+            form.instance.course = course
+            form.instance.creator = creator
+            form.save()
+
+        return redirect('teacher:notice', pk=course.id)
+
+
+class CourseNoticeDeleteView(views.View):
+    def get(self, request, pk=None, notice=None, *args, **kwargs):
+        course = Course.objects.get(id=pk)
+
+        course_notice = CourseNotice.objects.get(id=notice)
+        course_notice.delete()
+
+        return redirect('teacher:notice', pk=course.id)
+
 
 class TaskDetailTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
