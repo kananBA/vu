@@ -4,5 +4,5 @@ from .views import QuizCreateView
 
 app_name = 'quiz'
 urlpatterns = [
-    path('create/', QuizCreateView.as_view(), name='create'),
+    path('create/<int:pk>/', QuizCreateView.as_view(), name='create'),
 ]

@@ -36,7 +36,7 @@
                         <h1 class="h3 mb-0 text-gray-800">افزودن امتحان</h1>
                     </div>
 
-                    <form method="post" action="{% url 'quiz:create' %}" class="p-3 mb-3" style="background: #4e73df; color: #fff;">
+                    <form method="post" action="{% url 'quiz:create' course.id %}" class="p-3 mb-3" style="background: #4e73df; color: #fff;">
                         {% csrf_token %}
 
                         <div class="form-row">

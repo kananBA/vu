@@ -2,11 +2,17 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from users.models import User
+from course.models import Course
 
 # Create your models here.
 
 
 class Quiz(models.Model):
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name=_('Course'),
+    )
     title = models.CharField(
         max_length=50,
         verbose_name=_('Title'),
