@@ -41,11 +41,11 @@ class LoginView(views.View):
 
             if user is not None and user.role == 1:
                 login(request, user)
-                return redirect('teacher:index')
+                return redirect('teacher:dashboard')
 
             elif user is not None and user.role == 2:
                 login(request, user)
-                return redirect('student:index')
+                return redirect('student:dashboard')
 
             else:
                 messages.warning(

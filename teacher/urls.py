@@ -4,7 +4,7 @@ from .views import DashboardTemplateView, CourseTemplateView, CourseNoticeTempla
 
 app_name = 'teacher'
 urlpatterns = [
-    path('dashboard/', DashboardTemplateView.as_view(), name='index'),
+    path('dashboard/', DashboardTemplateView.as_view(), name='dashboard'),
     path('course/<int:pk>/', CourseTemplateView.as_view(), name='course'),
     path('course/<int:pk>/student/delete/<str:username>/', CourseStudentDeleteView.as_view(), name='course-student-delete'),
     path('course/<int:pk>/student/add/<str:username>/', CourseStudentAddView.as_view(), name='course-student-add'),
