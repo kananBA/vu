@@ -4,7 +4,29 @@ from django.shortcuts import render, redirect
 from .models import MultipleChoiceAnswer, DescriptiveAnswer, FileAnswer
 from .forms import MultipleChoiceAnswerUpdateForm, DescriptiveAnswerUpdateForm, FileAnswerUpdateForm
 
+from quiz.models import QuizStudent
+
 # Create your views here.
+
+
+class AnswerUpdateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        quiz_student = QuizStudent.objects.get(id=pk)
+
+        multiple_answer = MultipleChoiceAnswer.objects.filter(quiz_student=quiz_student, is_show=False).first()
+        descriptive_answer = DescriptiveAnswer.objects.filter(quiz_student=quiz_student, is_show=False).first()
+        file_answer = FileAnswer.objects.filter(quiz_student=quiz_student, is_show=False).first()
+
+        if multiple_answer:
+            return redirect("answer:multiple-update", pk=multiple_answer.id)
+
+        elif descriptive_answer:
+            return redirect("answer:descriptive-update", pk=descriptive_answer.id)
+
+        elif file_answer:
+            return redirect("answer:file-update", pk=file_answer.id)
+
+        return render(request, 'answer/done.html', {})
 
 
 class MultipleChoiceAnswerUpdateView(views.View):
@@ -34,7 +56,7 @@ class MultipleChoiceAnswerUpdateView(views.View):
             multiple_answer.answer = form.cleaned_data['answer']
             multiple_answer.save()
 
-            return redirect("answer:multiple-update", pk=multiple_answer.id)
+            return redirect("answer:answer-update", pk=multiple_answer.quiz_student.id)
 
 
 class DescriptiveAnswerUpdateView(views.View):
@@ -64,7 +86,7 @@ class DescriptiveAnswerUpdateView(views.View):
             descriptive_answer.answer = form.cleaned_data['answer']
             descriptive_answer.save()
 
-            return redirect("answer:descriptive-update", pk=descriptive_answer.id)
+            return redirect("answer:answer-update", pk=descriptive_answer.quiz_student.id)
 
 
 class FileAnswerUpdateView(views.View):
@@ -94,4 +116,4 @@ class FileAnswerUpdateView(views.View):
             file_answer.file = form.cleaned_data['file']
             file_answer.save()
 
-            return redirect("answer:file-update", pk=file_answer.id)
+            return redirect("answer:answer-update", pk=file_answer.quiz_student.id)
