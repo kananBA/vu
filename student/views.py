@@ -1,7 +1,9 @@
 from django import views
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from course.models import Course, CourseNotice
+from task.models import CourseTask, CourseTaskStudent
+from task.forms import TaskCreateForm
 
 # Create your views here.
 
@@ -21,3 +23,41 @@ class NoticeTemplateView(views.View):
         }
 
         return render(request, 'student/notice.html', data)
+
+
+class TaskListTemplateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        course = Course.objects.get(id=pk)
+        course_task = CourseTask.objects.filter(course=course)
+
+        data = {
+            'course_task': course_task,
+        }
+
+        return render(request, 'student/task-list.html', data)
+
+class TaskDetailTemplateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        user = self.request.user
+        course_task = CourseTask.objects.get(id=pk)
+
+        course_task_student = CourseTaskStudent.objects.filter(course_task=course_task, student=user)
+        form = TaskCreateForm()
+
+        data = {
+            'course_task_student': course_task_student,
+            'form': form,
+        }
+
+        return render(request, 'student/task-detail.html', data)
+
+class TaskCreateTemplateView(views.View):
+    def post(self, request, pk=None, format=None):
+        form = TaskCreateForm(self.request.POST, self.request.FILES)
+        course_task_student = CourseTaskStudent.objects.get(id=pk)
+
+        if form.is_valid():
+            course_task_student.file = form.cleaned_data['file']
+            course_task_student.save()
+
+            return redirect("student:task-detail", pk=course_task_student.course_task.id)
