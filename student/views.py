@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from course.models import Course, CourseNotice
 from task.models import CourseTask, CourseTaskStudent
 from task.forms import TaskCreateForm
+from quiz.models import QuizStudent
 
 # Create your views here.
 
@@ -82,3 +83,16 @@ class TaskCreateTemplateView(views.View):
             course_task_student.save()
 
             return redirect("student:task-detail", pk=course_task_student.course_task.id)
+
+
+class QuizListTemplateView(views.View):
+    def get(self, request, format=None):
+        user = self.request.user
+
+        quiz_student_list = QuizStudent.objects.filter(student=user)
+
+        data = {
+            'quiz_list': quiz_student_list,
+        }
+
+        return render(request, 'student/quiz-list.html', data)

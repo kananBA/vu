@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import DashboardTemplateView, NoticeTemplateView, TaskListTemplateView, TaskDetailTemplateView, TaskCreateTemplateView, CourseTemplateView
+from .views import DashboardTemplateView, NoticeTemplateView, TaskListTemplateView, TaskDetailTemplateView, TaskCreateTemplateView, CourseTemplateView, QuizListTemplateView
 
 app_name = 'student'
 urlpatterns = [
@@ -10,4 +10,5 @@ urlpatterns = [
     path('task/list/<int:pk>/', TaskListTemplateView.as_view(), name='task-list'),
     path('task/detail/<int:pk>/', TaskDetailTemplateView.as_view(), name='task-detail'),
     path('task/create/<int:pk>/', TaskCreateTemplateView.as_view(), name='task-create'),
+    path('quiz/', QuizListTemplateView.as_view(), name='quiz-list'),
 ]
