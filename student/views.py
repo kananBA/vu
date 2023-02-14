@@ -10,7 +10,26 @@ from task.forms import TaskCreateForm
 
 class DashboardTemplateView(views.View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'student/dashboard.html', {})
+        student = self.request.user
+
+        course_list = Course.objects.filter(student=student)
+
+        data = {
+            'course_list': course_list,
+        }
+
+        return render(request, 'student/dashboard.html', data)
+
+
+class CourseTemplateView(views.View):
+    def get(self, request, pk=None, *args, **kwargs):
+        course = Course.objects.get(id=pk)
+
+        data = {
+            'course': course,
+        }
+
+        return render(request, 'student/course.html', data)
 
 
 class NoticeTemplateView(views.View):
@@ -36,6 +55,7 @@ class TaskListTemplateView(views.View):
 
         return render(request, 'student/task-list.html', data)
 
+
 class TaskDetailTemplateView(views.View):
     def get(self, request, pk=None, *args, **kwargs):
         user = self.request.user
@@ -50,6 +70,7 @@ class TaskDetailTemplateView(views.View):
         }
 
         return render(request, 'student/task-detail.html', data)
+
 
 class TaskCreateTemplateView(views.View):
     def post(self, request, pk=None, format=None):
